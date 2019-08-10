@@ -7,11 +7,11 @@ class DatabaseHandler(object):
 
     def __init__(self, database_path):
 
-        self.database_path = database_path
+        self.database_path = database_path + "/" + "database.db"
         self.filehandler = FileHandler(relative_root_path="..")
 
-        if not self.filehandler.file_exists(self.database_path):
-            sql_command = self.filehandler.load_file("resources/setup.sql")
+        if not self.filehandler.file_exists(self.database_path)
+            sql_command = self.filehandler.load_file(database_path + "/" + "setup.sql")
 
             conn = sqlite3.connect(self.database_path)
             cursor = conn.cursor()

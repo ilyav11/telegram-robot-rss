@@ -11,10 +11,10 @@ from util.feedhandler import FeedHandler
 
 class RobotRss(object):
 
-    def __init__(self, telegram_token, update_interval):
+    def __init__(self, telegram_token, update_interval, resources_path):
 
         # Initialize bot internals
-        self.db = DatabaseHandler("resources/datastore.db")
+        self.db = DatabaseHandler(resources_path.replace("/",""))
         self.fh = FileHandler("..")
 
         # Register webhook to telegram bot
@@ -229,9 +229,10 @@ class RobotRss(object):
 if __name__ == '__main__':
     # Load Credentials
     fh = FileHandler("..")
-    credentials = fh.load_json("resources/credentials.json")
+    resources_path = os.environ["RESOURCES_PATH"]
+    credentials = fh.load_json(resources_path.replace("/","") + "/" + "credentials.json")
 
     # Pass Credentials to bot
     token = credentials["telegram_token"]
     update = credentials["update_interval"]
-    RobotRss(telegram_token=token, update_interval=update)
+    RobotRss(telegram_token=token, update_interval=update, resources_path=resources_path)
