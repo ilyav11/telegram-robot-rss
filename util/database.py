@@ -10,7 +10,7 @@ class DatabaseHandler(object):
         self.database_path = database_path + "/" + "database.db"
         self.filehandler = FileHandler(relative_root_path="..")
 
-        if not self.filehandler.file_exists(self.database_path)
+        if not self.filehandler.file_exists(self.database_path):
             sql_command = self.filehandler.load_file(database_path + "/" + "setup.sql")
 
             conn = sqlite3.connect(self.database_path)

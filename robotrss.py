@@ -7,6 +7,7 @@ from util.filehandler import FileHandler
 from util.database import DatabaseHandler
 from util.processing import BatchProcess
 from util.feedhandler import FeedHandler
+import os
 
 
 class RobotRss(object):
@@ -14,7 +15,7 @@ class RobotRss(object):
     def __init__(self, telegram_token, update_interval, resources_path):
 
         # Initialize bot internals
-        self.db = DatabaseHandler(resources_path.replace("/",""))
+        self.db = DatabaseHandler(resources_path)
         self.fh = FileHandler("..")
 
         # Register webhook to telegram bot
@@ -230,9 +231,8 @@ if __name__ == '__main__':
     # Load Credentials
     fh = FileHandler("..")
     resources_path = os.environ["RESOURCES_PATH"]
-    credentials = fh.load_json(resources_path.replace("/","") + "/" + "credentials.json")
 
     # Pass Credentials to bot
-    token = credentials["telegram_token"]
-    update = credentials["update_interval"]
+    token = os.environ["BOT_TOKEN"]
+    update = os.environ["UPDATE_INTERVAL"]
     RobotRss(telegram_token=token, update_interval=update, resources_path=resources_path)

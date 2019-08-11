@@ -5,8 +5,11 @@ COPY . /workspace
 # Environment Variables for future use
 ENV BOT_TOKEN telegram_bot_token
 ENV UPDATE_INTERVAL 300
-ENV RESOURCES_PATH /workspace/tbot/resources
+ENV RESOURCES_PATH /tbot/resources
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt \
+	&& mkdir -p tbot \
+	&& mv resources tbot 
 
-CMD python .docker/initconfig.py && python robotrss.py
+VOLUME /tbot
+CMD  python robotrss.py
